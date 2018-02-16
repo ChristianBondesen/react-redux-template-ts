@@ -1,6 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Asset, Font } from 'expo';
 import { Image } from 'react-native';
+import { Images } from '../Images';
 
 const cacheImages = images => {
   return images.map(image => {
@@ -19,7 +20,7 @@ const cacheFonts = fonts => {
 export const loadAndCacheAssets = async () => {
   const imageAssets = cacheImages([
     'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-    require('./assets/images/circle.jpg'),
+    Images.icon,
   ]);
 
   const fontAssets = cacheFonts([FontAwesome.font]);

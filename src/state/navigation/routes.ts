@@ -14,7 +14,7 @@ const headerTitleStyle = {
 // NAVIGATORS
 export const MainNavigator = StackNavigator(
   {
-    Main: {
+    AppContainer: {
       screen: AppContainer,
     },
   },
