@@ -6,10 +6,10 @@ import { configureStore } from './dist/store/store';
 import AppContainer from './dist/AppContainer';
 
 const store = configureStore().store;
+const TAG = 'App.js';
 
 export default class App extends React.Component {
   render() {
-    console.log('App.js', 'Rendering provider and AppContainer');
     return (
       <Provider store={store}>
         <AppContainer />

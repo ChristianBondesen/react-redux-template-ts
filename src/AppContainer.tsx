@@ -23,6 +23,7 @@ import { IAppState } from './state/ducks';
 import { commonActions } from './state/ducks/common';
 import { ICommonActions } from './state/ducks/common/actions';
 import { MainNavigator } from './state/navigation/routes';
+import { loadAndCacheAssets } from './utils/cachingUtils';
 
 const TAG = 'AppContainer';
 
@@ -80,8 +81,7 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
   };
 
   loadAssets = async () => {
-    return;
-    // await loadAndCacheAssets();
+    await loadAndCacheAssets();
   };
 
   setReady = () => {
@@ -94,7 +94,6 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
   };
 
   render() {
-    console.log(TAG, `Rendering, ready? ${this.state.isReady}\n`);
     if (!this.state.isReady) {
       return (
         <AppLoading

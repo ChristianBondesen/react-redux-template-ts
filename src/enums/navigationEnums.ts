@@ -1,3 +1,3 @@
 export enum RouteNames {
-  AppContainer = 'AppContainer',
+  LoginNav = 'LoginNav',
 }

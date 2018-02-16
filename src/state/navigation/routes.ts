@@ -1,11 +1,11 @@
 import { StackNavigator, TabBarBottom, TabNavigator } from 'react-navigation';
 
 import { colors } from '../../commonStyles';
-// import CreateCampaignEntryContainer from '../../components/campaigns/CreateCampaignEntryContainer';
 import { RouteNames } from './../../enums/navigationEnums';
 import AppContainer from '../../AppContainer';
+import LoginScreen from '../../components/LoginScreen';
 
-export const INITIAL_ROUTE = RouteNames.AppContainer;
+export const INITIAL_ROUTE = RouteNames.LoginNav;
 
 const headerTitleStyle = {
   color: colors.SECONDARY,
@@ -14,8 +14,8 @@ const headerTitleStyle = {
 // NAVIGATORS
 export const MainNavigator = StackNavigator(
   {
-    AppContainer: {
-      screen: AppContainer,
+    LoginNav: {
+      screen: LoginScreen,
     },
   },
   {

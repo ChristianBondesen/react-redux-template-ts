@@ -32,6 +32,7 @@ const persistConfig = {
 };
 
 const reducer = persistReducer(persistConfig, rootReducer);
+const TAG = 'store.ts';
 
 // Navigation middleware
 // export const navMiddlewareName = 'root';
@@ -50,30 +51,31 @@ const middleware = __DEV__
 
 // Build store
 export const configureStore = () => {
+  console.log(TAG, `configuring store\n`);
   // *** REACT NATIVE DEBUGGER SETUP ***
   // Short guide on setup: https://medium.com/react-native-development/develop-react-native-redux-applications-like-a-boss-with-this-tool-ec84bed7af8
-  // const enhancer = compose(
-  //   applyMiddleware(...middleware),
-  //   global.reduxNativeDevTools
-  //     ? global.reduxNativeDevTools(/*options*/)
-  //     : noop => noop
-  // );
-
-  // const store = createStore(reducer, enhancer);
-
-  // if (global.reduxNativeDevTools) {
-  //   global.reduxNativeDevTools.updateStore(store);
-  // }
-
-  // *** REMOTEDEV.IO SETUP ***
-  const store = createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(...middleware))
+  const enhancer = compose(
+    applyMiddleware(...middleware),
+    global.reduxNativeDevTools
+      ? global.reduxNativeDevTools(/*options*/)
+      : noop => noop
   );
 
+  const store = createStore(reducer, enhancer);
+
+  if (global.reduxNativeDevTools) {
+    global.reduxNativeDevTools.updateStore(store);
+  }
+
+  // *** REMOTEDEV.IO SETUP ***
+  // const store = createStore(
+  //   reducer,
+  //   composeWithDevTools(applyMiddleware(...middleware))
+  // );
+
   // Switch the comments below around to clear store
-  const persistor = persistStore(store);
-  // purgeStoredState(persistConfig);
+  // const persistor = persistStore(store);
+  purgeStoredState(persistConfig);
 
   return { store };
 };
