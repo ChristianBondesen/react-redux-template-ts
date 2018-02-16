@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { connect } from 'react-redux';
 
 import { globalSheet } from '../../commonStyles';
-import { IAppState } from '../../state/ducks';
 
 const TAG = 'GenericErrorBoundary';
 
@@ -13,7 +11,6 @@ interface IState {
 
 export interface IGenericErrorBoundaryProps {
   children: any;
-  state: IAppState;
 }
 
 class GenericErrorBoundary extends React.Component<
@@ -30,24 +27,9 @@ class GenericErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      console.log(TAG, `Rendering error screen\n`);
       return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={[
-              globalSheet.subtitle,
-              {
-                color: 'red',
-                textAlign: 'center',
-              },
-            ]}
-          >
+        <View style={styles.container}>
+          <Text style={[globalSheet.subtitle, styles.text]}>
             D’oh! Something went wrong - sorry! {'\n'}It’s not you, it’s us.
           </Text>
         </View>
@@ -59,13 +41,15 @@ class GenericErrorBoundary extends React.Component<
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: 'red',
+    textAlign: 'center',
+  },
 });
 
-const mapStateToProps = (state: IAppState, ownProps) => {
-  return {
-    state,
-  };
-};
-
-export default connect(mapStateToProps)(GenericErrorBoundary);
+export default GenericErrorBoundary;

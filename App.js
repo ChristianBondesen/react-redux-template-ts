@@ -9,6 +9,7 @@ const store = configureStore().store;
 
 export default class App extends React.Component {
   render() {
+    console.log('App.js', 'Rendering provider and AppContainer');
     return (
       <Provider store={store}>
         <AppContainer />

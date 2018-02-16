@@ -1,16 +1,25 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import * as global from 'global';
+import {
+  createReactNavigationReduxMiddleware,
+  createReduxBoundAddListener,
+} from 'react-navigation-redux-helpers';
 import { applyMiddleware, compose, createStore } from 'redux';
 import immutableStateInvariant from 'redux-immutable-state-invariant';
-import { createMigrate, persistReducer, purgeStoredState } from 'redux-persist';
+import {
+  createMigrate,
+  persistReducer,
+  purgeStoredState,
+  persistStore,
+} from 'redux-persist';
 // tslint:disable-next-line:no-submodule-imports
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 
 import { rootReducer } from './../state/ducks';
 import { migrations } from './migrations';
+import { composeWithDevTools } from 'remote-redux-devtools';
 
-// tslint:disable-next-line:no-submodule-imports
 const PERSIST_CONFIG_KEY = 'bw-tracking-root';
 const PERSIST_VERSION = 0;
 
@@ -24,38 +33,47 @@ const persistConfig = {
 
 const reducer = persistReducer(persistConfig, rootReducer);
 
-const sharedMiddleware = [thunk];
+// Navigation middleware
+// export const navMiddlewareName = 'root';
+// const navMiddleware = createReactNavigationReduxMiddleware(
+//   navMiddlewareName,
+//   state => state.nav
+// );
 
+// export const addListener = createReduxBoundAddListener(navMiddlewareName);
+
+// Combine middleware based on env
+const sharedMiddleware = [thunk];
 const middleware = __DEV__
   ? [immutableStateInvariant(), ...sharedMiddleware]
   : [...sharedMiddleware];
 
+// Build store
 export const configureStore = () => {
   // *** REACT NATIVE DEBUGGER SETUP ***
   // Short guide on setup: https://medium.com/react-native-development/develop-react-native-redux-applications-like-a-boss-with-this-tool-ec84bed7af8
-  const enhancer = compose(
-    applyMiddleware(...middleware),
-    global.reduxNativeDevTools
-      ? global.reduxNativeDevTools(/*options*/)
-      : noop => noop
-  );
-
-  const store = createStore(reducer, enhancer);
-
-  if (global.reduxNativeDevTools) {
-    global.reduxNativeDevTools.updateStore(store);
-  }
-
-  // *** REMOTEDEV.IO SETUP ***
-  // const store = createStore(
-  //   reducer,
-  //   composeWithDevTools(applyMiddleware(...middleware))
+  // const enhancer = compose(
+  //   applyMiddleware(...middleware),
+  //   global.reduxNativeDevTools
+  //     ? global.reduxNativeDevTools(/*options*/)
+  //     : noop => noop
   // );
 
-  // Switch the comments below around to clear store
-  // const persistor = persistStore(store);
-  purgeStoredState(persistConfig);
+  // const store = createStore(reducer, enhancer);
 
-  // return { store, persistor };
+  // if (global.reduxNativeDevTools) {
+  //   global.reduxNativeDevTools.updateStore(store);
+  // }
+
+  // *** REMOTEDEV.IO SETUP ***
+  const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(...middleware))
+  );
+
+  // Switch the comments below around to clear store
+  const persistor = persistStore(store);
+  // purgeStoredState(persistConfig);
+
   return { store };
 };

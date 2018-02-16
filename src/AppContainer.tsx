@@ -1,7 +1,6 @@
 import { AppLoading } from 'expo';
 import * as React from 'react';
 import {
-  AppState,
   BackHandler,
   NetInfo,
   Platform,
@@ -24,7 +23,6 @@ import { IAppState } from './state/ducks';
 import { commonActions } from './state/ducks/common';
 import { ICommonActions } from './state/ducks/common/actions';
 import { MainNavigator } from './state/navigation/routes';
-import { loadAndCacheAssets } from './utils/cachingUtils';
 
 const TAG = 'AppContainer';
 
@@ -36,7 +34,6 @@ export interface IAppContainerProps {
 
 interface IState {
   isReady: boolean;
-  appState: string;
 }
 
 const backhandlerListener = 'hardwareBackPress';
@@ -45,7 +42,6 @@ const connectionChangeListener = 'connectionChange';
 class AppContainer extends React.Component<IAppContainerProps, IState> {
   state: IState = {
     isReady: false,
-    appState: AppState.currentState,
   };
 
   componentDidMount() {
@@ -84,7 +80,8 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
   };
 
   loadAssets = async () => {
-    await loadAndCacheAssets();
+    return;
+    // await loadAndCacheAssets();
   };
 
   setReady = () => {
@@ -96,7 +93,8 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
     // TODO: Report error
   };
 
-  public render() {
+  render() {
+    console.log(TAG, `Rendering, ready? ${this.state.isReady}\n`);
     if (!this.state.isReady) {
       return (
         <AppLoading
