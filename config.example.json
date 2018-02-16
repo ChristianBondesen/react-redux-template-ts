@@ -1,0 +1,6 @@
+{
+  "urls": {
+    "baseAPIURL": "http://....com/api",
+    "termsURL": "https://www.google.com"
+  }
+}

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Common action creators should properly create a change action for connection status using snapshot 1`] = `
+Object {
+  "payload": false,
+  "type": "common/CHANGE_CONNECTION_STATUS",
+}
+`;

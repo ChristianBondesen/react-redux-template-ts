@@ -1,9 +1,97 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "description": "An app for tracking shipment parcels for Blue Water",
+  "author": "Jesper Madsen",
   "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:update": "jest -u",
+    "coverage": "rimraf coverage && jest --coverage",
+    "tsw": "tsc --watch",
+    "nuke": "rimraf node_modules && watchman watch-del-all && yarn install",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "publish:test": "exp publish --release-channel test-v1",
+    "publish:stage": "exp publish --release-channel stage-v1",
+    "publish:prod": "exp publish --release-channel prod-v1",
+    "publish:history": "exp publish:history",
+    "build:ios": "exp build:ios --release-channel prod-v1",
+    "build:android": "exp build:android --release-channel prod-v1"
+  },
   "dependencies": {
     "expo": "^25.0.0",
     "react": "16.2.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react-native-keyboard-aware-scroll-view": "^0.4.3",
+    "react-navigation": "^1.0.0-beta.27",
+    "react-redux": "5.0.6",
+    "redux": "3.7.2",
+    "redux-persist": "5.4.0",
+    "redux-thunk": "2.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.1.2",
+    "@types/react": "^16.0.38",
+    "@types/react-native": "^0.52.12",
+    "@types/react-navigation": "^1.0.32",
+    "@types/react-redux": "^5.0.15",
+    "@types/redux": "^3.6.0",
+    "@types/redux-devtools": "^3.0.43",
+    "@types/redux-immutable-state-invariant": "^2.0.4",
+    "@types/remote-redux-devtools": "^0.5.2",
+    "eslint": "^4.17.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react":"^7.6.1",
+    "fetch-mock": "^5.12.2",
+    "flux-standard-action": "^2.0.1",
+    "jest": "22.3.0",
+    "prettier": "^1.10.2",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-mock-store": "^1.5.1",
+    "remote-redux-devtools": "^0.5.12",
+    "rimraf": "2.6.2",
+    "ts-jest": "^22.0.4",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.8.0",
+    "tslint-eslint-rules": "^5.0.0",
+    "tslint-react": "^3.5.1",
+    "typescript": "2.7.2",
+    "why-did-you-update": "^0.1.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "\\.snap$",
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "cacheDirectory": ".jest/cache",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/src/*.js",
+      "!**/dist/**"
+    ],
+    "setupFiles": [
+      "./src/global-mock-fetch.ts",
+      "./__mocks__/redux-mock-store.ts"
+    ],
+    "automock": false
   }
 }

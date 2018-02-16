@@ -1,3 +1,19 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+
+# VSCode specific ignores
+.vscode/.react/
+
+coverage
+
+config.prod.json
+config.dev.json
+
+# TypeScript
+#
+dist/
+
+# Jest
+#
+.jest/
