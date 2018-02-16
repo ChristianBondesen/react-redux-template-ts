@@ -1,19 +1,12 @@
+import { IFluxStandardAction } from '../FluxStandardAction';
 import * as types from './types';
-
-import {
-  ActionMeta,
-  AppError,
-  IFluxStandardAction,
-} from '../FluxStandardAction';
 
 export interface IChangeConnectionStatus extends IFluxStandardAction {
   type: types.CHANGE_CONNECTION_STATUS;
   payload: boolean;
 }
 
-export type CommonStateAction =
-  | IChangeConnectionStatus
- 
+export type CommonStateAction = IChangeConnectionStatus;
 
 export const setConnectionStatus = (
   connected: boolean

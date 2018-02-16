@@ -1,25 +1,24 @@
-import commonReducer, {
-  ICommonState,
-  defaultState as commonDefault,
-} from './common/reducers';
+import { NavigationState } from 'react-navigation';
+import { combineReducers } from 'redux';
 
 import {
   initialState as navDefault,
   navReducer,
 } from './../navigation/reducer';
+import commonReducer, {
+  defaultState as commonDefault,
+  ICommonState,
+} from './common/reducers';
 
 // import likesReducer, {
 //   ILikesState,
 //   defaultState as likesDefault,
 // } from './likes/reducers';
 
-import { IAppState } from './index';
-import { combineReducers } from 'redux';
-
 export interface IAppState {
   common: ICommonState;
   // likes: ILikesState;
-  nav?: any;
+  nav: NavigationState;
 }
 
 export const appDefaultState: IAppState = {

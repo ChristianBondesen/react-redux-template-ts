@@ -1,4 +1,5 @@
 import { Dimensions, Platform } from 'react-native';
+
 const TAG = 'screenUtils.ts';
 
 const screenDimens = {

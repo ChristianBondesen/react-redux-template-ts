@@ -1,5 +1,4 @@
-import { AppLoading, Constants } from 'expo';
-import NoConnection from './components/common/NoConnection';
+import { AppLoading } from 'expo';
 import * as React from 'react';
 import {
   AppState,
@@ -10,34 +9,36 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { addNavigationHelpers, NavigationActions, NavigationStateRoute, NavigationState } from 'react-navigation';
+import {
+  addNavigationHelpers,
+  NavigationActions,
+  NavigationState,
+} from 'react-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { colors } from './commonStyles';
 import GenericErrorBoundary from './components/common/GenericErrorBoundary';
-import { RouteNames } from './enums/navigationEnums';
+import NoConnection from './components/common/NoConnection';
 import { IAppState } from './state/ducks';
-import { MainNavigator } from './state/navigation/routes';
-import { colors, STATUS_BAR_HEIGHT } from './commonStyles';
-import { loadAndCacheAssets } from './utils/cachingUtils';
 import { commonActions } from './state/ducks/common';
 import { ICommonActions } from './state/ducks/common/actions';
+import { MainNavigator } from './state/navigation/routes';
+import { loadAndCacheAssets } from './utils/cachingUtils';
 
 const TAG = 'AppContainer';
 
 export interface IAppContainerProps {
-  nav: NavigationState
+  nav: NavigationState;
   dispatch;
-  actions: ICommonActions
+  actions: ICommonActions;
 }
 
 interface IState {
   isReady: boolean;
   appState: string;
-  showNewActivityPopup: boolean;
 }
 
-const appStateListener = 'change';
 const backhandlerListener = 'hardwareBackPress';
 const connectionChangeListener = 'connectionChange';
 
@@ -45,7 +46,6 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
   state: IState = {
     isReady: false,
     appState: AppState.currentState,
-    showNewActivityPopup: false,
   };
 
   componentDidMount() {
@@ -134,7 +134,7 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.CONTAINER_BACKGROUND_COLOR,
   },
 });
 

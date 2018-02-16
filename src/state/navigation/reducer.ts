@@ -1,4 +1,5 @@
 import { INITIAL_ROUTE, MainNavigator } from './routes';
+import { NavigationState, NavigationNavigateAction } from 'react-navigation';
 
 const TAG = 'nav reducer.ts';
 // @ts-ignore
@@ -6,7 +7,10 @@ export const initialState = MainNavigator.router.getStateForAction(
   MainNavigator.router.getActionForPathAndParams(INITIAL_ROUTE)
 );
 
-export const navReducer = (state, action) => {
+export const navReducer = (
+  state: NavigationState,
+  action: NavigationNavigateAction
+): NavigationState => {
   if (action.type.startsWith('Navigation/')) {
     // ** PREVENT DUBLICATE NAVIGATIONS TO SAME ROUTE **
     const { type, routeName } = action;
@@ -17,6 +21,9 @@ export const navReducer = (state, action) => {
     }
   }
 
-  const newState = MainNavigator.router.getStateForAction(action, state);
+  const newState: NavigationState = MainNavigator.router.getStateForAction(
+    action,
+    state
+  );
   return newState || state;
 };

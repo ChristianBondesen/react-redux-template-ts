@@ -1,9 +1,9 @@
-import { ImageResizeModes } from '../../enums/imageEnums';
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
-import { Images } from '../../Images';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
 import { globalSheet } from '../../commonStyles';
-import { screenDimens } from '../../utils/screenUtils';
+import { IAppState } from '../../state/ducks';
 
 const TAG = 'GenericErrorBoundary';
 
@@ -61,9 +61,6 @@ class GenericErrorBoundary extends React.Component<
 const styles = StyleSheet.create({
   container: {},
 });
-
-import { connect } from 'react-redux';
-import { IAppState } from '../../state/ducks/index';
 
 const mapStateToProps = (state: IAppState, ownProps) => {
   return {

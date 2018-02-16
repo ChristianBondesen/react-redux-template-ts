@@ -1,6 +1,7 @@
+import { Constants } from 'expo';
+
 import * as devConfig from './../../config.dev.json';
 import * as prodConfig from './../../config.prod.json';
-import { Constants } from 'expo';
 
 interface IConfig {
   urls: {

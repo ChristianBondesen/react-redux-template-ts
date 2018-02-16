@@ -19,7 +19,7 @@ export const dimensions = {
 export const NAVBAR_HEIGHT = isIphoneX() ? 88 : 64;
 export const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
-export const FONT_NORMAL = 'System'; // on iOS, System = San Fransisco
+export const FONT_NORMAL = 'System';
 
 export const globalSheet = StyleSheet.create({
   title: {
@@ -46,14 +46,5 @@ export const globalSheet = StyleSheet.create({
     fontFamily: FONT_NORMAL,
     textAlign: 'center',
     marginVertical: 8,
-  },
-  containerView: {
-    flex: 1,
-    // paddingTop:
-    //   Platform.OS === 'ios'
-    //     ? dimens.STATUS_BAR_HEIGHT + dimens.VIEW_PADDING * 2
-    //     : dimens.VIEW_PADDING,
-    paddingTop: NAVBAR_HEIGHT,
-    backgroundColor: colors.CONTAINER_BACKGROUND_COLOR,
   },
 });

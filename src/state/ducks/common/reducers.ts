@@ -1,8 +1,5 @@
-import { Animated } from 'react-native';
-
 import { CommonStateAction } from './actions';
 import * as types from './types';
-import { NAVBAR_HEIGHT, STATUS_BAR_HEIGHT } from '../../../commonStyles';
 
 export interface ICommonState {
   isConnected: boolean;

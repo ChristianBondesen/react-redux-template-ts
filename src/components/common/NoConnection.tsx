@@ -1,10 +1,9 @@
 import * as React from 'react';
-
-import { Animated, StyleSheet, Text, View } from 'react-native';
-
-import { IAppState } from '../../state/ducks';
+import { Animated, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { globalSheet, dimensions } from '../../commonStyles';
+
+import { dimensions, globalSheet } from '../../commonStyles';
+import { IAppState } from '../../state/ducks';
 
 const TAG = 'NoConnection';
 
