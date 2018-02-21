@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { colors } from './commonStyles';
+import { COLORS } from './commonStyles';
 import GenericErrorBoundary from './components/common/GenericErrorBoundary';
 import NoConnection from './components/common/NoConnection';
 import { IAppState } from './state/ducks';
@@ -131,7 +131,7 @@ class AppContainer extends React.Component<IAppContainerProps, IState> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.CONTAINER_BACKGROUND_COLOR,
+    backgroundColor: COLORS.CONTAINER_BACKGROUND_COLOR,
   },
 });
 

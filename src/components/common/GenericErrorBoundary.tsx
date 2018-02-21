@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { globalSheet } from '../../commonStyles';
+import { GLOBAL_STYLES } from '../../commonStyles';
 
 const TAG = 'GenericErrorBoundary';
 
@@ -29,7 +29,7 @@ class GenericErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <View style={styles.container}>
-          <Text style={[globalSheet.subtitle, styles.text]}>
+          <Text style={[GLOBAL_STYLES.subtitle, styles.text]}>
             D’oh! Something went wrong - sorry! {'\n'}It’s not you, it’s us.
           </Text>
         </View>

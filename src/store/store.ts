@@ -34,15 +34,6 @@ const persistConfig = {
 const reducer = persistReducer(persistConfig, rootReducer);
 const TAG = 'store.ts';
 
-// Navigation middleware
-// export const navMiddlewareName = 'root';
-// const navMiddleware = createReactNavigationReduxMiddleware(
-//   navMiddlewareName,
-//   state => state.nav
-// );
-
-// export const addListener = createReduxBoundAddListener(navMiddlewareName);
-
 // Combine middleware based on env
 const sharedMiddleware = [thunk];
 const middleware = __DEV__
@@ -51,31 +42,38 @@ const middleware = __DEV__
 
 // Build store
 export const configureStore = () => {
-  console.log(TAG, `configuring store\n`);
-  // *** REACT NATIVE DEBUGGER SETUP ***
-  // Short guide on setup: https://medium.com/react-native-development/develop-react-native-redux-applications-like-a-boss-with-this-tool-ec84bed7af8
-  const enhancer = compose(
-    applyMiddleware(...middleware),
-    global.reduxNativeDevTools
-      ? global.reduxNativeDevTools(/*options*/)
-      : noop => noop
-  );
-
-  const store = createStore(reducer, enhancer);
-
-  if (global.reduxNativeDevTools) {
-    global.reduxNativeDevTools.updateStore(store);
-  }
-
-  // *** REMOTEDEV.IO SETUP ***
-  // const store = createStore(
-  //   reducer,
-  //   composeWithDevTools(applyMiddleware(...middleware))
-  // );
+  const store = getStore(true);
 
   // Switch the comments below around to clear store
   // const persistor = persistStore(store);
   purgeStoredState(persistConfig);
 
   return { store };
+};
+
+/**
+ * Helper method to retrieve a store that can be used by either remotedev.io or React Native debug tools
+ * @param reactNativeTools whether or not to use reactNativeDebugTools - if not, we can use remotedev.io/local instaed and use breakpoints in VSCode
+ */
+const getStore = (reactNativeTools: boolean) => {
+  if (reactNativeTools) {
+    // *** REACT NATIVE DEBUGGER SETUP ***
+    // Short guide on setup: https://medium.com/react-native-development/develop-react-native-redux-applications-like-a-boss-with-this-tool-ec84bed7af8
+    const enhancer = compose(
+      applyMiddleware(...middleware),
+      global.reduxNativeDevTools
+        ? global.reduxNativeDevTools(/*options*/)
+        : noop => noop
+    );
+
+    const store = createStore(reducer, enhancer);
+    return store;
+  } else {
+    // *** REMOTEDEV.IO SETUP ***
+    const store = createStore(
+      reducer,
+      composeWithDevTools(applyMiddleware(...middleware))
+    );
+    return store;
+  }
 };

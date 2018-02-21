@@ -1,6 +1,6 @@
 import { StackNavigator, TabBarBottom, TabNavigator } from 'react-navigation';
 
-import { colors } from '../../commonStyles';
+import { COLORS } from '../../commonStyles';
 import { RouteNames } from './../../enums/navigationEnums';
 import AppContainer from '../../AppContainer';
 import LoginScreen from '../../components/LoginScreen';
@@ -8,7 +8,7 @@ import LoginScreen from '../../components/LoginScreen';
 export const INITIAL_ROUTE = RouteNames.LoginNav;
 
 const headerTitleStyle = {
-  color: colors.SECONDARY,
+  color: COLORS.SECONDARY,
 };
 
 // NAVIGATORS

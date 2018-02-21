@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import { dimensions, globalSheet } from '../../commonStyles';
+import { dimensions, GLOBAL_STYLES } from '../../commonStyles';
 import { IAppState } from '../../state/ducks';
 
 const TAG = 'NoConnection';
@@ -68,7 +68,7 @@ class NoConnection extends React.Component<
       >
         <Animated.Text
           style={[
-            globalSheet.breadText,
+            GLOBAL_STYLES.breadText,
             styles.text,
             {
               height: this.state.height,

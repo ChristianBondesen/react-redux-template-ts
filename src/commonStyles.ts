@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { Constants } from 'expo';
 import { screenDimens, isIphoneX } from './utils/screenUtils';
 
-export const colors = {
+export const COLORS = {
   PRIMARY: '#fff',
   PRIMARY_DARK: '#E1BEE7',
   SECONDARY: '#84356b',
@@ -21,24 +21,24 @@ export const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 export const FONT_NORMAL = 'System';
 
-export const globalSheet = StyleSheet.create({
+export const GLOBAL_STYLES = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '300',
-    color: colors.TEXT_PRIMARY,
+    color: COLORS.TEXT_PRIMARY,
     fontFamily: FONT_NORMAL,
   },
   subtitle: {
     fontSize: 25,
     fontWeight: '300',
     fontFamily: FONT_NORMAL,
-    color: colors.TEXT_PRIMARY,
+    color: COLORS.TEXT_PRIMARY,
   },
   breadText: {
     fontSize: 15,
     fontWeight: '100',
     fontFamily: FONT_NORMAL,
-    color: colors.TEXT_PRIMARY,
+    color: COLORS.TEXT_PRIMARY,
   },
   errorText: {
     color: 'red',
