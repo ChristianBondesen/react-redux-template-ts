@@ -26,9 +26,9 @@ const PERSIST_VERSION = 0;
 // Migrations example/docs: https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
 const persistConfig = {
   key: PERSIST_CONFIG_KEY,
+  migrate: createMigrate(migrations, { debug: __DEV__ }),
   storage,
   version: PERSIST_VERSION,
-  migrate: createMigrate(migrations, { debug: __DEV__ }),
 };
 
 const reducer = persistReducer(persistConfig, rootReducer);
