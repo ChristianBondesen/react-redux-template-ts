@@ -45,7 +45,7 @@ Only the example file is included in version control, the other two you must add
 
 Use the `/util/configHelper` to retrieve the config relevant to your current build (`prod`/`dev`) . Make sure to update the type of the expected config when you do.
 
-# Redux
+## Redux
 
 The app uses [Redux](http://redux.js.org/) for state management.
 
@@ -58,19 +58,6 @@ The `common` state is fully typed, and future additions to the redux store shoul
 ### Flux Standard Actions
 
 The app follows the recommended [FSA standard](https://github.com/acdlite/flux-standard-action), and the template includes a custom interface that all other actions should extend and implement. An optional, app-specific type, `IActionMeta` has also been added if the developer wants to extend the standard with his/her own fully typed meta objects.
-
-### Debugging
-
-As React Native runs in a Javascript VM in Chrome when developing, debugging is limited to one attached thread. When debugging a React Native + redux app, this is a bit unfortunate, as debugging tools for redux and react native cannot connect to the same process at the same time.
-
-This leave us with two choices:
-
-* Either we use `React Native Debugger`, which allows full redux state monitoring, element inspection and on-the-fly changes - but no IDE breakpoints, or
-* Use VSCode to run the VM, which allows for breakpoints in the IDE, and use the remotedev.io/local for redux inspection. The website is not too stable, sometimes it won't be up in which case you're out of luck.
-
-To switch between the two, go to the `store.ts` file and switch the boolean flag in `getStore`.
-
-I haven't had luck yet running the app in a packager (fx. XDE) and attaching VSCode to the process.
 
 ### Purging the store
 
@@ -94,58 +81,81 @@ Comment out either one or the other line depending on what you want. If you comm
 
 The store is set up with `redux-persist`. Once the app is in use, it's important to write migrations from one store state to another if new props are added, or if props are changed/deleted to avoid nullpointers/undefined errors for the user. Migrations can be added in `migrations.ts`
 
-### Routing
+## Debugging
+
+As React Native runs in a Javascript VM in Chrome when developing, debugging is limited to one attached thread. When debugging a React Native + redux app, this is a bit unfortunate, as debugging tools for redux and react native cannot connect to the same process at the same time.
+
+This leave us with two choices:
+
+* Either we use `React Native Debugger`, which allows full redux state monitoring, element inspection and on-the-fly changes - but no IDE breakpoints, or
+* Use VSCode to run the VM, which allows for breakpoints in the IDE, and use the remotedev.io/local for redux inspection. The website is not too stable, sometimes it won't be up in which case you're out of luck.
+
+To switch between the two, go to the `store.ts` file and switch the boolean flag in `getStore`.
+
+I haven't had luck yet running the app in a packager (fx. XDE) and attaching VSCode to the process.
+
+## Routing
 
 The app uses `react-navigation` for routing, and it has been hooked into the redux store for time-travel debugging, as well as dispatching navigation actions from operations. Currently, the routes are contained in `routes.ts` which should be sufficient unless the app grows a lot in complexity.
 
-### Styles
+## Styles
 
 The project has a `commonStyles.ts` file that contains style elements used appwide, such as color theme, text styles for title, subtitle etc. This can be adjusted and expanded as needed, of course.
 
-### Images object
+## Images object
 
 The file `Images.ts` should be used when needing to display local image assets instead of doing inline string requires. This allows for intellisense and easier refactoring.
 
+## AppLoading
+
+[AppLoading](https://docs.expo.io/versions/latest/sdk/app-loading.html) has been set up to pre-download fonts, images and assets before showing the app. Adjust the desired preloads in `cachingUtils`
+
+## Release channels
+
+[Release Channels](https://docs.expo.io/versions/latest/guides/release-channels.html) deploy scripts have been added to `package.json`, and is implemented in the `configHelper`.
+
+## Utility components
+
+Two utility components are included in the template.
+
+### NoConnection
+
+A small connected component that listens the the network state of the app. The listeners are set up and the component included in the `AppContainer`, such that a "No network connection" banner will be shown if the app looses internet connectivity. The styling and animation properties of it can be adjusted.
+
+### GenericErrorBoundary
+
+This is a generic fallback component that can be used in strategic places around the app to take advantage of the `componentDidCatch` error boundaries. This can of course also be modified.
+
+### app.json
+
+A recommended setup of `app.json` has been done, you can read more [here](https://docs.expo.io/versions/latest/guides/configuration.html). Things of note:
+
+* `assetBundlePatterns` - bundle local assets with binary
+* `splash` - configure the loading screen
+* `usesNonExemptEncryption` - Declares that the app does not use any specific encryption that Apple should know about. Short explanation [here](https://stackoverflow.com/a/36028077/1409779), and more info in Apple docs. Should be set to true if needed.
+* `infoPlist.NS...` - These two strings should be customized for the app's needs
+
 # Tests
 
-The project uses Jest tests with a fetch mocking library:
+The project uses Jest tests. Use the script `test:watch` to run impacted tests when you save files.
 
-https://github.com/wheresrhys/fetch-mock
+## Coverage
 
-Use the npm command test:watch to run impacted tests when you save files.
+Use the script `coverage` to get a coverage report. Note that some files have been excluded from the report. The list can be modified in `package.json` under the key `collectCoverageFrom`
 
-NOTE: At the time of writing, there are no tests for component layouts / snapshot tests, only tests for the redux store and API. If tests are added for the UI in the future, remember to remove the corresponding folders from the `collectCoverageFrom` setting in `package.json` to include them in coverage reports.
+## Example tests
 
+Some basic tests have been added for example's sake. Note the use of [snapshot testing](https://facebook.github.io/jest/docs/en/snapshot-testing.html) which can save a lot of typing, but not all people are fans.
+
+## On UI tests
+
+At the time of writing, there are no tests for component layouts / snapshot tests, only tests for the redux store and API. If tests are added for the UI in the future, remember to remove the corresponding folders from the `collectCoverageFrom` setting in `package.json` to include them in coverage reports.
+
+You can look into `Enzyme` if this becomes relevant.
+
+Some good info can be found here
 https://redux.js.org/recipes/writing-tests
 
 ## redux-mock-store
 
 This package is ONLY for testing that the correct actions are dispatched in operations, you cannot assert on state changes with it. For that, test the reducer itself.
-
-https://github.com/arnaudbenard/redux-mock-store/issues/71
-
-# TODO
-
-* Update docs for name conventions for ducks, as well as info on FSA
-
-# Known issues
-
-## App not reacting to changes?
-
-First of all, did you compile the typescript? If so, then see below
-
-After spending some very frustrating hours, I found out that there is a bug with Typescript (I think) that won't allow inclusion of the `__mock__` folder in the `tsconfig.json`:
-
-    "include": ["./src/", "./assets/images.ts"] <-- THIS WORKS
-    "include": ["./src/", "./assets/images.ts", "./__mocks__/redux-mock-store.ts"] <-- THIS DOES NOT
-    "include": ["./src/", "./assets/images.ts", "./__mocks__/"] <-- THIS DOESN'T EITHER
-
-Therefore, if you need to make changes to the mock store setup for some reason, switch the outcommenting back and forth between these to create the `.js` file in `/dist`, and then back to not including it.
-
-If the above doesn't work, try the following chain of comands:
-watchman watch-del-all
-rm -rf ./node_modules
-npm cache clean
-yarn cache clean
-rm -rf $TMPDIR/react-\*
-yarn
