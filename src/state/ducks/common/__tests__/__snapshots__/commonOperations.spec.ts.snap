@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Common operations tests dispatches increment call from operation - snapshot example 1`] = `
+Array [
+  Object {
+    "type": "common/INCREMENT_NETWORK_CALLS",
+  },
+]
+`;
