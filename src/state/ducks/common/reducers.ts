@@ -3,12 +3,14 @@ import * as types from './types';
 
 export interface ICommonState {
   isConnected: boolean;
+  networkCalls: number;
 }
 
 const TAG = 'reducers.ts';
 
 export const defaultState: ICommonState = {
   isConnected: true,
+  networkCalls: 0,
 };
 
 export const commonReducer = (
@@ -20,6 +22,12 @@ export const commonReducer = (
       return {
         ...state,
         isConnected: action.payload,
+      };
+
+    case types.INCREMENT_NETWORK_CALLS:
+      return {
+        ...state,
+        networkCalls: state.networkCalls + 1,
       };
 
     default:

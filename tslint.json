@@ -7,7 +7,10 @@
   ],
   "rules": {
     "ordered-imports": false,
-    // "no-console": false,
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "interface-over-type-literal": false,
+    "member-access": false,
     "no-implicit-dependencies": [true, "dev"]
   }
 }
