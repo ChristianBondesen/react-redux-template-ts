@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { IAppState } from '../state/ducks';
 import { ICommonOperations } from '../state/ducks/common/operations';
 import { commonOperations } from './../state/ducks/common';
+import { getCommonViewState } from '../state/ducks/common/selectors';
 
 const TAG = 'LoginScreen';
 
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state: IAppState, ownProps) => {
   return {
-    networkCalls: state.common.networkCalls,
+    networkCalls: getCommonViewState(state.common).numberOfCalls,
   };
 };
 

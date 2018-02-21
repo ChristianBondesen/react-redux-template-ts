@@ -81,6 +81,24 @@ Comment out either one or the other line depending on what you want. If you comm
 
 The store is set up with `redux-persist`. Once the app is in use, it's important to write migrations from one store state to another if new props are added, or if props are changed/deleted to avoid nullpointers/undefined errors for the user. Migrations can be added in `migrations.ts`
 
+### A note on selectors
+
+Using selectors is important - think of it as the 'public api' for your views. Even the simplest of state should be exported through a selector like this:
+
+`export const getViewState = state => state;`
+
+and views should not directly access state, ever.
+
+The reason is, that if (or more likely, when) the shape of the redux state eventually changes, the view logic can be unaffected if they only access it through selectors - you just update the selector logic once, and all the views are good to go! Therefore, it
+
+1. Reduce the complexity of your reducers & components
+2. Decouple the rest of your app from your state shape
+3. Obey the single source of truth principle, even within your reducer
+
+(Stolen from [here](https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44))
+
+Finally, make sure to use `reselect` for memoized selectors.
+
 ## Debugging
 
 As React Native runs in a Javascript VM in Chrome when developing, debugging is limited to one attached thread. When debugging a React Native + redux app, this is a bit unfortunate, as debugging tools for redux and react native cannot connect to the same process at the same time.
